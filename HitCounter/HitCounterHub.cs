@@ -13,17 +13,18 @@ namespace HitCounter
             Clients.All.hello();
         }
 
-        static int _hitCounter;
-
+        static int _current;
+        static int _total;
         public void Hit()
         {
-            _hitCounter++;
-            Clients.All.hit(_hitCounter);
+            _current++;
+            _total++;
+            Clients.All.hit(_current, _total);
         }
         public override System.Threading.Tasks.Task OnDisconnected(bool stopCalled)
         {
-            _hitCounter--;
-            Clients.All.hit(_hitCounter);
+            _current--;
+            Clients.All.hit(_current, _total);
             return base.OnDisconnected(stopCalled);
         }
 
